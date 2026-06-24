@@ -1,0 +1,6 @@
+{
+  "name": "CampusFlow",
+  "description": "AI-powered student productivity platform integrating study buddies, deadline plans, attendance tracking, and notice summarizers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
