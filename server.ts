@@ -475,7 +475,7 @@ app.post("/api/ai/flashcards", async (req, res) => {
   try {
     const prompt = `Based on the following student course notes, extract key core concepts and terms to generate a highly comprehensive list of 4-6 flashcard questions and answers. Notes:\n"${notes}"`;
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -517,7 +517,7 @@ app.post("/api/ai/quiz", async (req, res) => {
   try {
     const prompt = `Based on these course notes, generate 3-5 high-quality Multiple Choice Questions (MCQs) for study self-evaluation. Notes:\n"${notes}"`;
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -573,7 +573,7 @@ app.post("/api/ai/summarize", async (req, res) => {
     const prompt = `Analyze this college/campus bulletin notice and summarize it:
     Notice:\n"${noticeText}"`;
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -651,7 +651,7 @@ app.post("/api/ai/study-plan", async (req, res) => {
     Due Date: ${deadline.dueDate} (Today is 2026-06-24)`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -721,7 +721,7 @@ app.post("/api/ai/placement-tips", async (req, res) => {
     Interview Stage: ${placement.stage}`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -796,7 +796,7 @@ async function startServer() {
       appType: "spa",
     });
     app.use(vite.middlewares);
-    
+
     app.get("*", async (req, res, next) => {
       const url = req.originalUrl;
       try {
@@ -819,7 +819,7 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://0.0.0.0:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 }
 

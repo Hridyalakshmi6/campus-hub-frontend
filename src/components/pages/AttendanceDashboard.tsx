@@ -7,9 +7,37 @@ export default function AttendanceDashboard() {
   const { user } = useAuthStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [subject, setSubject] = useState("Compiler Design");
-  const [attended, setAttended] = useState(15);
-  const [total, setTotal] = useState(20);
+  const [subject, setSubject] = useState("");
+  const [attended, setAttended] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  // Pre-fill modal when it opens with first subject's data
+  const openModal = () => {
+    const first = attendance[0];
+    if (first) {
+      setSubject(first.subject);
+      setAttended(first.attended);
+      setTotal(first.total);
+    } else {
+      setSubject(user?.subjects?.[0] || "Compiler Design");
+      setAttended(0);
+      setTotal(0);
+    }
+    setIsModalOpen(true);
+  };
+
+  // When subject changes in modal, load existing data for that subject
+  const handleSubjectChange = (newSubject: string) => {
+    setSubject(newSubject);
+    const existing = attendance.find((a) => a.subject === newSubject);
+    if (existing) {
+      setAttended(existing.attended);
+      setTotal(existing.total);
+    } else {
+      setAttended(0);
+      setTotal(0);
+    }
+  };
 
   // Calculator State
   const [calcSubjectId, setCalcSubjectId] = useState<string | null>(null);
@@ -67,7 +95,7 @@ export default function AttendanceDashboard() {
           </p>
         </div>
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={openModal}
           className="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-1.5 shadow-md cursor-pointer transition-transform hover:scale-[1.02]"
         >
           <Plus className="h-4.5 w-4.5" />
@@ -243,7 +271,7 @@ export default function AttendanceDashboard() {
                 </label>
                 <select
                   value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
+                  onChange={(e) => handleSubjectChange(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none cursor-pointer"
                 >
                   {user?.subjects.map((sub) => (
